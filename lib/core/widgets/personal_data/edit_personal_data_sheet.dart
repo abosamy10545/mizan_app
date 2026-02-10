@@ -144,7 +144,7 @@ class _EditPersonalDataSheetState extends State<EditPersonalDataSheet> {
                 ),
 
                 Row(
-                  spacing: 20,
+                  spacing: 30,
                   children: [
                     const SizedBox(
                       child: Text(
@@ -156,37 +156,40 @@ class _EditPersonalDataSheetState extends State<EditPersonalDataSheet> {
                         ),
                       ),
                     ),
-                    Expanded(
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton<String>(
-                          value: country,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child: Expanded(
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                            value: country,
 
-                          dropdownColor: const Color(0xff7c9a7e),
-                          menuMaxHeight: 700,
-                          icon: const Icon(
-                            Icons.arrow_downward_outlined,
-                            color: Colors.black,
-                            size: 25,
+                            dropdownColor: const Color(0xff7c9a7e),
+                            menuMaxHeight: 700,
+                            icon: const Icon(
+                              Icons.arrow_downward_outlined,
+                              color: Colors.black,
+                              size: 25,
+                            ),
+                            style: const TextStyle(
+                              fontSize: 25,
+                              fontFamily: 'Handjet',
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+
+                            items: countries.map((c) {
+                              return DropdownMenuItem<String>(
+                                value: c,
+                                child: Text(c),
+                              );
+                            }).toList(),
+
+                            onChanged: (val) {
+                              setState(() {
+                                country = val!;
+                              });
+                            },
                           ),
-                          style: const TextStyle(
-                            fontSize: 25,
-                            fontFamily: 'Handjet',
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-
-                          items: countries.map((c) {
-                            return DropdownMenuItem<String>(
-                              value: c,
-                              child: Text(c),
-                            );
-                          }).toList(),
-
-                          onChanged: (val) {
-                            setState(() {
-                              country = val!;
-                            });
-                          },
                         ),
                       ),
                     ),

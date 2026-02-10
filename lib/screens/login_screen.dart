@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:mizan_app/core/widgets/auth/bank_balance_field.dart';
+import 'package:mizan_app/core/widgets/auth/login_button.dart';
 import 'package:mizan_app/core/widgets/auth/login_country_selector.dart';
 
+import 'package:mizan_app/core/widgets/auth/login_image.dart';
+import 'package:mizan_app/core/widgets/auth/login_text_field.dart';
+import 'package:mizan_app/core/widgets/auth/login_title.dart';
+import 'package:mizan_app/core/widgets/auth/monthly_salary_field.dart';
 import 'package:mizan_app/models/user_model.dart';
 import 'package:mizan_app/screens/home_screen.dart';
 import 'package:mizan_app/services/shared_pref.dart';
@@ -69,100 +75,44 @@ class _LoginScreenState extends State<LoginScreen> {
               key: formKey,
               child: Column(
                 children: [
-                  const Text(
-                    'ميزان',
-                    style: TextStyle(
-                      fontSize: 35,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'ReemKufi',
-                    ),
-                  ),
+                  const LoginTitle(),
                   const SizedBox(height: 10),
-                  Image.asset('assets/images/login.gif', width: 230),
+                  const LoginImage(),
                   const SizedBox(height: 20),
 
-                  TextFormField(
+                  LoginTextField(
                     controller: nameController,
-                    validator: (value) =>
-                        value!.isEmpty ? 'please enter your name' : null,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Name',
-                    ),
+                    label: 'Name',
+                    errorText: 'please enter your name',
                   ),
-
                   const SizedBox(height: 10),
 
-                  TextFormField(
+                  LoginTextField(
                     controller: emailController,
-                    validator: (value) =>
-                        value!.isEmpty ? 'please enter your email' : null,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Email',
-                    ),
+                    label: 'Email',
+                    errorText: 'please enter your email',
                   ),
-
                   const SizedBox(height: 10),
 
-                  TextFormField(
+                  MonthlySalaryField(
                     controller: monthlySalaryController,
-                    keyboardType: TextInputType.number,
-                    obscureText: isShownMonthlySalary,
-                    validator: (value) {
-                      if (value!.isEmpty) return 'enter salary';
-                      if (double.tryParse(value) == null) {
-                        return 'enter valid number';
-                      }
-                      return null;
+                    isHidden: isShownMonthlySalary,
+                    onToggle: () {
+                      setState(() {
+                        isShownMonthlySalary = !isShownMonthlySalary;
+                      });
                     },
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      labelText: 'Monthly Salary',
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            isShownMonthlySalary = !isShownMonthlySalary;
-                          });
-                        },
-                        icon: Icon(
-                          isShownMonthlySalary
-                              ? Icons.visibility_off
-                              : Icons.visibility,
-                        ),
-                      ),
-                    ),
                   ),
-
                   const SizedBox(height: 10),
 
-                  TextFormField(
+                  BankBalanceField(
                     controller: bankBalanceController,
-                    keyboardType: TextInputType.number,
-                    obscureText: isShownBankBalance,
-                    validator: (value) {
-                      if (value!.isEmpty) return 'enter bank balance';
-                      if (double.tryParse(value) == null) {
-                        return 'enter valid number';
-                      }
-                      return null;
+                    isHidden: isShownBankBalance,
+                    onToggle: () {
+                      setState(() {
+                        isShownBankBalance = !isShownBankBalance;
+                      });
                     },
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      labelText: 'Bank Balance',
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            isShownBankBalance = !isShownBankBalance;
-                          });
-                        },
-                        icon: Icon(
-                          isShownBankBalance
-                              ? Icons.visibility_off
-                              : Icons.visibility,
-                        ),
-                      ),
-                    ),
                   ),
 
                   const SizedBox(height: 10),
@@ -176,16 +126,21 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   const SizedBox(height: 20),
 
-                  ElevatedButton(
+                  LoginButton(
                     onPressed: () async {
                       if (!formKey.currentState!.validate()) return;
+
+                      if (selectedCountry == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('اختار الدولة')),
+                        );
+                        return;
+                      }
 
                       final user = UserModel(
                         name: nameController.text,
                         email: emailController.text,
-                        monthlySalary: int.parse(
-                          monthlySalaryController.text,
-                        ),
+                        monthlySalary: int.parse(monthlySalaryController.text),
                         bankBalance: int.parse(bankBalanceController.text),
                         country: selectedCountry!,
                       );
@@ -195,35 +150,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       if (!mounted) return;
 
                       Navigator.pushReplacement(
-                        // ignore: use_build_context_synchronously
                         context,
                         MaterialPageRoute(
                           builder: (_) => HomeScreen(user: user),
                         ),
                       );
                     },
-                    style: ButtonStyle(
-                      shape: WidgetStateProperty.all(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      backgroundColor: WidgetStateProperty.all(Colors.green),
-                      padding: WidgetStateProperty.all(
-                        const EdgeInsets.symmetric(
-                          horizontal: 40,
-                          vertical: 15,
-                        ),
-                      ),
-                    ),
-                    child: const Text(
-                      'Login',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
                   ),
                 ],
               ),
