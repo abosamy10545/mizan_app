@@ -9,7 +9,7 @@ import 'package:mizan_app/core/widgets/auth/login_title.dart';
 import 'package:mizan_app/core/widgets/auth/monthly_salary_field.dart';
 import 'package:mizan_app/models/user_model.dart';
 import 'package:mizan_app/screens/home_screen.dart';
-import 'package:mizan_app/services/shared_pref.dart';
+import 'package:mizan_app/services/shared_pref_user.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

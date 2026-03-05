@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mizan_app/screens/home_screen.dart';
 import 'package:mizan_app/screens/login_screen.dart';
-import 'package:mizan_app/services/shared_pref.dart';
+import 'package:mizan_app/services/shared_pref_user.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

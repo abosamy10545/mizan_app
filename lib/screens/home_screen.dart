@@ -3,6 +3,8 @@ import 'package:mizan_app/core/widgets/home/home_feature_card.dart';
 import 'package:mizan_app/core/widgets/home/home_header.dart';
 import 'package:mizan_app/models/user_model.dart';
 import 'package:mizan_app/screens/currency_converter_screen.dart';
+import 'package:mizan_app/screens/installment_Plans_Screen.dart';
+import 'package:mizan_app/screens/organizing_expenses.dart';
 import 'package:mizan_app/screens/personal_data_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -29,12 +31,15 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Color(0xfffff3df),
       appBar: AppBar(
         backgroundColor: Color(0xfffff3df),
-        title: Text(
-          'Mizan',
-          style: TextStyle(
-            fontSize: 40,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'ReemKufi',
+        title: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Text(
+            'Mizan',
+            style: TextStyle(
+              fontSize: 40,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'ReemKufi',
+            ),
           ),
         ),
       ),
@@ -62,14 +67,26 @@ class _HomeScreenState extends State<HomeScreen> {
             HomeFeatureCard(
               title: 'Installment plans and payment schedules',
               image: 'assets/images/aqsat.jpg',
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => InstallmentPlansScreen()),
+                );
+              },
             ),
 
             const SizedBox(height: 15),
             HomeFeatureCard(
               title: 'Organizing expenses in relation to your monthly income',
               image: 'assets/images/masrouf.png',
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => OrganizingExpenses(user: widget.user),
+                  ),
+                );
+              },
             ),
 
             const SizedBox(height: 15),

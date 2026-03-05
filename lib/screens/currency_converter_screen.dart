@@ -60,17 +60,20 @@ class _CurrencyConverterScreenState extends State<CurrencyConverterScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Color(0xfffff3df),
-        title: Text(
-          'Mizan',
-          style: TextStyle(
-            fontSize: 40,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'ReemKufi',
+        title: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Text(
+            'Mizan',
+            style: TextStyle(
+              fontSize: 40,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'ReemKufi',
+            ),
           ),
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(10),
         child: Column(
           children: [
             const ConverterHeader(),
